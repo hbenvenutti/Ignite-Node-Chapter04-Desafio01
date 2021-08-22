@@ -2,6 +2,7 @@ import { response } from 'express';
 import request from 'supertest';
 import { Connection, createConnection } from 'typeorm';
 import { app } from '../../../../../app'
+import { CreateUserError } from '../CreateUserError';
 
 let connection: Connection;
 
@@ -26,5 +27,17 @@ describe('Create User Use Case', () => {
   })
 
 
-  it('should not create a duplicate user', async () => {})
+  it('should not create a duplicate user', async () => {
+    await request(app)
+    .post('/api/v1/users/')
+    .send({name: 'foo', email: 'foo@bar.com', password: 'password'});
+
+    const response = await request(app)
+    .post('/api/v1/users/')
+    .send({name: 'foo', email: 'foo@bar.com', password: 'password'});
+
+    expect(response.status).toEqual(400);
+    expect(response.body).toHaveProperty('message');
+    expect(response.body.message).toEqual('User already exists');
+  })
 })
