@@ -13,8 +13,6 @@ describe('Create User Use Case', () => {
     await request(app)
       .post('/api/v1/users/')
       .send({name: 'foo', email: 'foo@bar.com', password: 'password'});
-
-
   })
 
   afterAll(async() => {
@@ -53,7 +51,7 @@ describe('Create User Use Case', () => {
   it('should not show profile of unauthenticated user', async () => {
     const response = await request(app)
       .get('/api/v1/profile')
-    
+
     expect(response.status).toEqual(401);
     expect(response.body).toHaveProperty('message');
     expect(response.body.message).toEqual('JWT token is missing!');
