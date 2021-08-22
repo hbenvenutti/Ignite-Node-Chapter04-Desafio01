@@ -1,8 +1,6 @@
-import { response } from 'express';
 import request from 'supertest';
 import { Connection, createConnection } from 'typeorm';
 import { app } from '../../../../../app'
-import { CreateUserError } from '../CreateUserError';
 
 let connection: Connection;
 
