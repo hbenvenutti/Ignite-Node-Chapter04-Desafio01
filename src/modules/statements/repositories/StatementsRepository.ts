@@ -51,7 +51,7 @@ export class StatementsRepository implements IStatementsRepository {
         return acc + operation.amount;
       }
 
-      else if(operation.type === 'transfer' && operation.user_id === user_id){
+      else if(operation.type === 'transfer' && operation.sender_id !== user_id){
         return acc + operation.amount;
       }
 
