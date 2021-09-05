@@ -1,10 +1,8 @@
+import { v4 as uuid } from 'uuid';
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 import { User } from "../../users/entities/User";
 
-enum TransactionType{
-  income = 'income',
-  outcome = 'outcome',
-}
+
 @Entity()
 class Transaction {
   @PrimaryColumn()
@@ -15,9 +13,6 @@ class Transaction {
 
   @Column('decimal', { precision: 5, scale: 2 })
   amount: number;
-
-  @Column({ type: 'enum', enum: TransactionType})
-  type: TransactionType
 
   @ManyToOne(() => User, user => user.transaction)
   @JoinColumn({ name: 'user_id' })
@@ -30,9 +25,17 @@ class Transaction {
   @JoinColumn({ name: 'recipient_id' })
   recipient: User;
 
+  @Column()
+  recipient_id: string;
+
   @CreateDateColumn()
   created_at: Date
 
+  constructor(){
+    if(!this.id) {
+      this.id = uuid();
+    }
+  }
 }
 
 export default Transaction;

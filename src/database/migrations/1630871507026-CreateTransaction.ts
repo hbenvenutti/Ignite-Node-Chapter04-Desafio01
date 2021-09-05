@@ -7,7 +7,6 @@ export class CreateTransaction1630871507026 implements MigrationInterface {
         name: 'transactions',
         columns: [
           {name: 'id', type: 'uuid', isPrimary: true},
-          {name: 'type', type: 'enum', enum: ['income', 'outcome']},
           {name: 'user_id', type: 'uuid'},
           {name: 'recipient_id', type: 'uuid'},
           {name: 'amount', type: 'decimal'},
